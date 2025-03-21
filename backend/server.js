@@ -1,6 +1,16 @@
-const express = require('express');
-const dotenv = require('dotenv');
-const connectDB = require('./db/db');
+import express from "express";
+import dotenv from 'dotenv'
+import connectDB from './db/db.js'
+import userRoutes from './routes/UserRoutes.js'
+import { errorHandler } from './middleware/errorHandler.js'
+import { invalidPathHandler } from './middleware/errorHandler.js'
+import cors from 'cors';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 
 dotenv.config();
 const app = express();
@@ -8,14 +18,28 @@ const app = express();
 // Connect to database
 connectDB();
 
+
 // Middleware
 app.use(express.json());
+
+app.use(cors());
 
 
 // Example route
 app.get('/', (req, res) => {
   res.send('API is running...');
 });
+
+
+
+app.use('/api/users', userRoutes);
+
+
+app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
+
+app.use(invalidPathHandler);
+app.use(errorHandler);
+
 
 // Start the server
 const PORT = process.env.PORT || 5000;
