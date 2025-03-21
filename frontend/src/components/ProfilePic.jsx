@@ -27,7 +27,7 @@ const ProfilePic = ({ avatar }) => {
   const { mutate, isLoading } = useMutation({
     mutationFn: ({ token, formData }) => updateProfilePicture({ token, formData }),
     onSuccess: (data) => {
-      setPhoto(null); // Reset photo state
+   
       dispatch(userActions.setUserInfo(data));
       localStorage.setItem("account", JSON.stringify(data));
       queryClient.invalidateQueries(["profile"]);
@@ -81,7 +81,7 @@ const ProfilePic = ({ avatar }) => {
   };
 
   return (
-    <div className="w-full flex items-center gap-x-4">
+    <div className="w-full flex items-center gap-x-4 py-4">
       <div className="relative w-20 h-20 rounded-full outline outline-offset-2 outline-1 outline-primary overflow-hidden">
         <label
           htmlFor="profilePicture"

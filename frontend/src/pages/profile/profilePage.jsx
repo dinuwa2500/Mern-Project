@@ -85,7 +85,7 @@ const ProfilePage = () => {
     return (
         <MainLayout>
             <section className='container mx-auto px6 py-10 '>
-                <div className='w-full max-w-sm mx-auto py-4'>
+                <div className='w-full max-w-sm mx-auto'>
 
                     {/* Test updated Data*/ }
                     

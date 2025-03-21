@@ -94,7 +94,7 @@ export const signup = async ({ name, email, password }) => {
         },
       };
 
-      const { data } = await axios.put(`${API_URL}/updateprofilePicture`, formData, config);
+      const { data } = await axios.put(`${API_URL}/updateprofileimage`, formData, config);
       return data;
       
     } catch (error) {
