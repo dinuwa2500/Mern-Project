@@ -28,7 +28,7 @@ const ProfilePage = () => {
 
     const { mutate, isLoading } = useMutation({
         mutationFn: ({ name, email, password }) => {
-            return updateProfile({ token: userState.userInfo.token, userData: { name, email, password } });
+            return updateProfile({ token: userState.userInfo.token, userData: { name, email, password } , userId: userState.userInfo._id });
         },
         onSuccess: (data) => {
             dispatch(userActions.setUserInfo(data));

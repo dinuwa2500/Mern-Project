@@ -102,13 +102,13 @@ const Header = () => {
               </NavItemCollapse>
 
               <NavItem
-                title="Users"
-                link="/admin/users/manage"
-                icon={<FaUser className="text-xl" />}
-                name="users"
-                activeNavName={activeNavName}
-                setActiveNavName={setActiveNavName}
-              />
+  title="Users"
+  link="/admin/users/manage"
+  icon={<FaUser className="text-xl" />}
+  name="users"
+  activeNavName={activeNavName}
+  setActiveNavName={setActiveNavName}
+/>
             </div>
           </div>
         </div>

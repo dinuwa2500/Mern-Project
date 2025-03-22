@@ -31,7 +31,7 @@ const ProfilePic = ({ avatar }) => {
       dispatch(userActions.setUserInfo(data));
       localStorage.setItem("account", JSON.stringify(data));
       queryClient.invalidateQueries(["profile"]);
-      toast.success("Profile photo updated!");
+  
     },
     onError: (error) => {
       toast.error(error?.response?.data?.message || 'Update failed');
@@ -66,6 +66,7 @@ const ProfilePic = ({ avatar }) => {
       token: userState.userInfo.token, 
       formData 
     });
+    toast.success("Profile photo updated!");
   };
 
   const handleDelete = () => {
@@ -78,6 +79,8 @@ const ProfilePic = ({ avatar }) => {
       token: userState.userInfo.token, 
       formData 
     });
+
+    toast.success("Profile photo deleted successfully!");
   };
 
   return (

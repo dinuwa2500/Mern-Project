@@ -65,7 +65,7 @@ export const signup = async ({ name, email, password }) => {
   };
 
 
-  export const updateProfile = async ({ token, userData }) => {
+  export const updateProfile = async ({ token, userData , userId}) => {
 
     try {
       const config = {
@@ -74,7 +74,7 @@ export const signup = async ({ name, email, password }) => {
         },
       };
 
-      const { data } = await axios.put(`${API_URL}/updateprofile`, userData, config);
+      const { data } = await axios.put(`${API_URL}/updateprofile/${userId}`, userData, config);
       return data;
       
     } catch (error) {
@@ -104,4 +104,45 @@ export const signup = async ({ name, email, password }) => {
     }
   };
 
-  export default { signup, login , getUserProfile, updateProfile, updateProfilePicture};
+  export const getAllUsers = async (token) => {
+    const response = await axios.get(`${API_URL}/`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  };
+
+  export const deleteUser = async ({ userId, token }) => {
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+  
+        const { data } = await axios.delete(`${API_URL}/${userId}`, config);
+      return data;
+    } catch (error) {
+      if (error.response && error.response.data.message)
+        throw new Error(error.response.data.message);
+      throw new Error(error.message);
+    }
+  };
+
+  export const changeUserRoleToAdmin = async (userId, token) => {
+    try {
+      const response = await axios.put(
+        `${API_URL}/users/${userId}/role/admin`,
+        {},
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      console.log("User role updated:", response.data);
+    } catch (error) {
+      console.error("Error updating user role:", error);
+    }
+  };
+
+
+
+  export default { signup, login , getUserProfile, updateProfile, updateProfilePicture , getAllUsers , deleteUser , changeUserRoleToAdmin };
