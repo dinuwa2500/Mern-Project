@@ -7,6 +7,9 @@ import { invalidPathHandler } from './middleware/errorHandler.js'
 import cors from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import router from './routes/UserRoutes.js'
+import TicketRouter from './routes/TicketRoute.js'
+
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -33,6 +36,8 @@ app.get('/', (req, res) => {
 
 
 app.use('/api/users', userRoutes);
+app.use("/api", TicketRouter);
+
 
 
 app.use("/uploads", express.static(path.join(__dirname, "/uploads")));

@@ -10,10 +10,9 @@ email : { type : String ,required  : true , unique : true} ,
 password : { type : String ,required  : true} ,
 verified : { type : Boolean , default : false},
 //verificationCode : {type : String , required : true },
+role : { type : String , default : "user"},
 admin : { type : Boolean , default : false},
-driver : { type : Boolean , default : false},
-manager : { type : Boolean , default : false},
-paymentManager : { type : Boolean , default : false},
+
 },
 {timestamps : true}
 )
@@ -29,7 +28,7 @@ UserSchema.pre("save", async function (next) {
   UserSchema.methods.generateJWT  = async function() {
     try {
       console.log("Generating token for user with ID:", this._id);  // Debug log
-      const token = jwt.sign({ id: this._id }, process.env.JWT_SECRET, { expiresIn: '30d' });
+      const token = jwt.sign({ id: this._id , admin: this.admin}, process.env.JWT_SECRET, { expiresIn: '30d' });
       console.log("Token generated:", token);  // Debug log
       return token;
   } catch (error) {

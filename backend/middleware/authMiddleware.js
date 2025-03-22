@@ -9,6 +9,7 @@ export const authGuard = async (req, res, next) => {
 
             // The token is valid, proceed with user fetching
             req.user = await User.findById(decoded.id).select('-password');
+            console.log('User in req.user:', req.user); // Log the user data
             next();
 
         } catch (error) {
@@ -30,3 +31,13 @@ export const authGuard = async (req, res, next) => {
         next(err);
     }
 };
+
+export const adminGuard = (req, res, next) => {
+    if (req.user && req.user.admin) {
+      next();
+    } else {
+      let error = new Error("Not authorized as an admn");
+      error.statusCode = 401;
+      next(error);
+    }
+  };
