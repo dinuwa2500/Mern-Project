@@ -6,6 +6,8 @@ const UserSchema = new Schema ({
 
 avatar : {  type : String , default : ""  },
 name : { type : String ,required  : true} ,
+mobilenumber : { type : String ,default : ""} ,
+address : { type : String ,default : ""} ,
 email : { type : String ,required  : true , unique : true} ,
 password : { type : String ,required  : true} ,
 verified : { type : Boolean , default : false},

@@ -1,6 +1,11 @@
 import mongoose from 'mongoose';
 
 const ticketSchema = new mongoose.Schema({
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User', // Assumes you're storing user data
+        required: true
+      },
     name: { type: String, required: true },
     email: { type: String, required: true },
     mobileNumber: { type: String, required: true },

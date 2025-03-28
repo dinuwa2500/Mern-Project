@@ -9,6 +9,8 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import router from './routes/UserRoutes.js'
 import TicketRouter from './routes/TicketRoute.js'
+import bodyParser from 'body-parser';
+
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -22,11 +24,12 @@ const app = express();
 connectDB();
 
 
-// Middleware
-app.use(express.json());
+
 
 app.use(cors());
-
+app.use(express.json());
+ app.use(bodyParser.json()); // Parse JSON bodies
+ app.use(bodyParser.urlencoded({ extended: true })); // Parse URL-encoded bodies
 
 // Example route
 app.get('/', (req, res) => {
@@ -37,6 +40,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/users', userRoutes);
 app.use("/api", TicketRouter);
+
 
 
 

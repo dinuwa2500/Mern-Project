@@ -32,8 +32,11 @@ const registerUser = async (req, res, next) => {
         admin: user.admin,
         driver: user.driver,
         manager: user.manager,
+        address: user.address,
+        mobilenumber: user.mobilenumber,
         paymentManager: user.paymentManager,
         token: await user.generateJWT (),    
+        createdAt: user.createdAt,
       });
     } catch (error) {
       next(error);
@@ -67,10 +70,13 @@ const loginUser = async (req, res, next) => {
             email: user.email,
             verified: user.verified,
             admin: user.admin,
+            address: user.address,
+            mobilenumber: user.mobilenumber,
             driver: user.driver,
             manager: user.manager,
             paymentManager: user.paymentManager,
             token: token,
+            createdAt: user.createdAt,
         });
     } catch (error) {
         next(error);
@@ -91,11 +97,13 @@ const userProfile = async (req, res , next) => {
                 email : user.email,
                 verified : user.verified,
                 admin : user.admin,
+                address : user.address,
+                mobilenumber : user.mobilenumber,
                 driver : user.driver,
                 manager : user.manager,
                 paymentManager : user.paymentManager,
                 token : await user.generateJWT (),
-    
+                createdAt: user.createdAt,  
              });
         }else{
             let err = new Error('User not found');
@@ -114,33 +122,41 @@ const userProfile = async (req, res , next) => {
 
 const updateProfile  = async (req, res , next) => {
 
-    const UseridToUpdate = req.body.userId;
+
 
         let userId = req.user._id;
 
-        if(!req.user.isAdmin && userId !== UseridToUpdate){
+        if(!req.user.admin && userId !== userId){
             throw new Error('You are not authorized to update this profile');
         }
 
-        if(typeof req.body.isAdmin !== 'undefined' &&       req.user.isAdmin){
-            User.isAdmin = req.body.isAdmin;
+        if(typeof req.body.admin !== 'undefined' && req.user.admin){
+            User.admin = req.body.admin;
         }
 
     try {
 
-        let user = await User.findById(UseridToUpdate);
+        let user = await User.findById(userId);
 
         if(!user){
             throw new Error('User not found');
 
         }else{
             user.name = req.body.name || user.name;
-            user.email = req.body.email || user.email;
-            user.password = req.body.password || user.password;
-            if(req.body.password && req.body.password.length < 6){ 
-                throw new Error('Password must be at least 6 characters long');
-            }else if(req.body.password){
-                user.password = req.body.password;
+            if (req.body.mobilenumber) {
+              const mobilePattern = /^\d{10}$/;
+              if (!mobilePattern.test(req.body.mobilenumber)) {
+                  throw new Error('Mobile number must be 10 digits');
+              }
+              console.log("Mobile number:", req.body.mobilenumber);
+              user.mobilenumber = req.body.mobilenumber;
+      
+          }
+            user.address = req.body.address || user.address;
+            if(req.body.address && req.body.address.length < 6){ 
+                throw new Error('Address must be at least 6 characters long');
+            }else if(req.body.address){
+                user.address = req.body.address;
             }
         }
         
@@ -152,10 +168,13 @@ const updateProfile  = async (req, res , next) => {
             name : updatedUser.name,
             email : updatedUser.email,
             admin : updatedUser.admin,
+            address : updatedUser.address,
+            mobilenumber : updatedUser.mobilenumber,
             driver : updatedUser.driver,
             manager : updatedUser.manager,
             paymentManager : updatedUser.paymentManager,
             token : await updatedUser.generateJWT (),
+            createdAt: updatedUser.createdAt,
         });
 
         
@@ -193,10 +212,13 @@ const updateProfileImage = async (req, res, next) => {
                         name: updatedUser.name,
                         email: updatedUser.email,
                         admin: updatedUser.admin,
+                        address: updatedUser.address,
+                        mobilenumber: updatedUser.mobilenumber,
                         driver: updatedUser.driver,
                         manager: updatedUser.manager,
                         paymentManager: updatedUser.paymentManager,
                         token: await updatedUser.generateJWT (),
+                        createdAt: updatedUser.createdAt,
                     });
                 } else {
                     // Remove existing profile picture
@@ -211,11 +233,14 @@ const updateProfileImage = async (req, res, next) => {
                         avatar: updateUser.avatar,
                         name: updateUser.name,
                         email: updateUser.email,
-                        isAdmin: updateUser.admin,
-                        isDriver: updateUser.driver,
+                        admin: updateUser.admin,
+                        address: updateUser.address,
+                        mobilenumber: updateUser.mobilenumber,
+                        driver: updateUser.driver,
                         manager: updateUser.manager,
                         paymentManager: updateUser.paymentManager,
                         token: await updateUser.generateJWT (),
+                        createdAt: updateUser.createdAt,
                     });
                 }
             }
