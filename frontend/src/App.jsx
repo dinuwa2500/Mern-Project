@@ -13,7 +13,13 @@ import Users from './pages/admintest/userView.jsx'
 import ModalForm from './components/support/modelForm.jsx'
 import TableList from './components/support/TableList.jsx'
 import DashboardWelcome from './pages/admintest/dashboardwelcome.jsx'
-
+import Sidebar from './components/support/sidebar.jsx'
+import UpdateTicket from './components/support/updateTicket.jsx'
+import InsertItemPage from './pages/asitha/InsertItemPage.jsx'
+import InventoryPage from './pages/asitha/InventoryPage.jsx'
+import BuyPage from './pages/asitha/BuyPage.jsx'
+import AdminRoute from './pages/admin/adminroute.jsx'
+  
 function App() {
 
   return (
@@ -27,15 +33,19 @@ function App() {
          
       
       
-      <Route path='/admin' element={<DashboardLayout />}>
-        <Route path='dashboard' element={<DashboardWelcome />}></Route>
-        <Route path='orders' element={<Orders />}></Route>
-        <Route path='users' element={<Users />}></Route>
-        <Route path='support' element={<TableList />}></Route>
-      </Route>
   
+       <Route path="/admin" element={<AdminRoute element={<DashboardLayout />} />}>
+          <Route index element={<DashboardWelcome />} />
+          <Route path="dashboard" element={<DashboardWelcome />} />
+          <Route path="orders" element={<Orders />} />
+          <Route path="users" element={<Users />} />
+        </Route>
+  
+        <Route path='/mytickets' element={<TableList />}>
+        
+        </Route>
 
-    
+
       
       
    </Routes>

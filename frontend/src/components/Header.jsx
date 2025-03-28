@@ -9,17 +9,10 @@ import { logout } from "../store/actions/user";
 
 const navItemsInfo = [
   { name: "Home", type: "link", href: "/" },
-  { name: "Blog", type: "link", href: "/blog" },
-  {
-    name: "Pages",
-    type: "dropdown",
-    items: [
-      { title: "About us", href: "/about" },
-      { title: "Contact us", href: "/contact" },
-    ],
-  },
-  { name: "Pricing", type: "link", href: "/pricing" },
-  { name: "Faq", type: "link", href: "/faq" },
+  { name: "Collections", type: "link", href: "/collections" },
+  
+  { name: "About", type: "link", href: "/about" },
+  { name: "Support", type: "link", href: "/support" },
 ];
 
 const NavItem = ({ item }) => {
@@ -151,6 +144,13 @@ const Header = () => {
                         className="hover:bg-blue-500 hover:text-white px-4 py-2 text-black lg:text-dark-soft"
                       >
                         Dashboard
+                      </button>
+                      <button
+                        onClick={() => navigate("/mytickets")}
+                        type="button"
+                        className="hover:bg-blue-500 hover:text-white px-4 py-2 text-black lg:text-dark-soft"
+                      >
+                        My Tickets
                       </button>
                       <button
                         onClick={logoutHandler}
